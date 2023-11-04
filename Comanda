@@ -1,0 +1,118 @@
+class Comanda {
+private int numeroComanda;
+private String consumo; 
+private double valor;
+private int quant_cliente;
+
+public void getComanda(String consumo, double valor, int numeroComanda){
+    this.consumo = consumo;
+    this.valor = valor;
+    this.numeroComanda =  numeroComanda;
+}
+
+public void mostrarComanda() {
+        System.out.println("Número da Comanda: " + numeroComanda);
+        System.out.println("Consumo: " + consumo);
+        System.out.println("Valor: " + valor);
+    }
+     public int getNumeroComanda() {
+        return numeroComanda;
+    }
+    
+    public double calculo10p(){
+        double dez = 1.1 * valor;
+        return dez;
+    }
+
+    public double valor(){
+        return valor;
+    }
+}
+class Main{
+    public static void main(String[] args){
+        int escolha, escolha2;
+        Restaurante r1 = new Restaurante("Buchinho Cheio", "Rua x");
+        List<Mesa> mesas = new ArrayList<>();
+        List<Comanda> comandas = new ArrayList<>();
+        List<Cliente> clientes = new ArrayList<>();
+        int quntMesa = 0;
+        
+        do{
+        System.out.println("O que voce deseja fazer?\n1 - pegar uma mesa\n2 - mostrar o cardapio\n3 - fechar a conta\n0 - sair");
+        Scanner sc = new Scanner(System.in);
+        escolha = sc.nextInt();
+        switch(escolha){
+            case 1:
+                System.out.println("quantidade de cliente na mesa: ");
+                int quant_cliente = sc.nextInt();
+                quntMesa++;
+                Mesa mesa = new Mesa();
+                mesa.getMesa(quntMesa, false, quant_cliente);
+                mesas.add(mesa);
+                System.out.println("Mesa reservada: " + quntMesa);
+                Cliente cliente = new Cliente();
+                System.out.println("Nome na comanda: ");
+                    sc.nextLine();
+                    String nomeCliente = sc.nextLine();
+                    
+                    System.out.println("email: ");
+                    String emailCliente = sc.nextLine();
+                    cliente.getCliente(nomeCliente, emailCliente, quntMesa);
+                    clientes.add(cliente);
+                    
+                
+                break;
+            case 2: 
+                
+                
+                System.out.println("1-Agua - 2,0\n2-Coxinha - 5,0\n3-Refri - 6,0");
+                System.out.println("Informe o numero do pedido: ");
+                escolha2 = sc.nextInt();
+                System.out.println("Informe o numero da mesa: ");
+                int mesa_num = sc.nextInt();
+                Comanda comanda = new Comanda();
+                if(escolha2 == 1){
+                    
+                    comanda.getComanda("agua", 2, mesa_num);
+                }else if(escolha2 == 2){
+                    
+                    comanda.getComanda("coxinha", 5, mesa_num);
+                }else if(escolha2 == 3){
+                    
+                    comanda.getComanda("refri", 6, mesa_num);
+                }
+                comandas.add(comanda);
+                
+                 
+                break;
+            case 3: 
+                System.out.println("Informe o numero da mesa para fecharmos a conta: ");
+                sc.nextLine();
+                int fechar_mesa = sc.nextInt();
+                 for (int f = 0; f < comandas.size(); f++) {
+                     Comanda comanda_aux = comandas.get(f);
+                    if (comanda_aux.getNumeroComanda() == fechar_mesa) {
+                    comanda_aux.mostrarComanda();
+                    System.out.println("Valor com 10%: " + comanda_aux.calculo10p());
+                    for(int g = 0; g < mesas.size(); g++){
+                        Mesa mesa_aux = mesas.get(g);
+                        if(mesa_aux.numeroMesa() == fechar_mesa){
+                            
+                            double val = comanda_aux.calculo10p();
+                            int nMesa = mesa_aux.quantCliente();
+                            double dividido = val/nMesa;
+                            System.out.println("valor dividido: " + dividido);
+                        }
+                    }
+                    
+                    break; 
+                    }
+                }
+                
+
+        }
+        
+        }while (escolha != 0);
+
+    }
+}
