@@ -1,8 +1,15 @@
+import java.util.ArrayList;
+import java.util.List;
+
 class Mesa{
     private int numeroMesa;
     private boolean reserva;
     private int quant_cliente;
-    
+    List<Comanda> pedidos = new ArrayList<>();
+
+    public void adicionarPedido(Comanda pedido) {
+        pedidos.add(pedido);
+    }
     
     public void getMesa(int numeroMesa, boolean reserva, int quant_cliente){
         this.numeroMesa = numeroMesa;
