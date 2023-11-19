@@ -1,21 +1,22 @@
+import java.util.ArrayList;
+import java.util.List;
+
 class Comanda {
 private int numeroComanda;
 private String consumo; 
 private double valor;
 private int quant_cliente;
 
+
 public void getComanda(String consumo, double valor, int numeroComanda){
     this.consumo = consumo;
     this.valor = valor;
     this.numeroComanda =  numeroComanda;
+    
+
 }
 
-public void mostrarComanda() {
-        System.out.println("Número da Comanda: " + numeroComanda);
-        System.out.println("Consumo: " + consumo);
-        System.out.println("Valor: " + valor);
-    }
-     public int getNumeroComanda() {
+public int getNumeroComanda() {
         return numeroComanda;
     }
     
@@ -28,4 +29,3 @@ public void mostrarComanda() {
         return valor;
     }
 }
-
