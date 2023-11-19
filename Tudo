@@ -39,3 +39,30 @@ public void mostrarComanda() {
         return valor;
     }
 }
+class Mesa{
+    private int numeroMesa;
+    private boolean reserva;
+    private int quant_cliente;
+    
+    
+    public void getMesa(int numeroMesa, boolean reserva, int quant_cliente){
+        this.numeroMesa = numeroMesa;
+        this.reserva = reserva; 
+        this.quant_cliente = quant_cliente;
+    }
+    
+    public boolean statusdaMesa(){
+        return reserva;
+    }
+    
+    public int quantCliente(){
+        return quant_cliente;
+    }
+    
+    public int numeroMesa(){
+        return numeroMesa;
+    }
+    
+   
+}
+
