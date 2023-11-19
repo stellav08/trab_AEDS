@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 class Cliente{
     private int numeroCliente;
     private String nome; 
@@ -66,3 +68,22 @@ class Mesa{
    
 }
 
+class Restaurante{
+    private String nome; 
+    private String endereco; 
+    List<Mesa> mesas = new ArrayList<>();
+    private int qntMesa = 0; 
+
+    Restaurante(String nome, String endereco){
+        this.nome = nome;
+        this.endereco = endereco; 
+    }
+    public void adiciona(Mesa m){
+        mesas.add(m);
+        qntMesa++;
+    }
+    
+    public int qntMesa(){
+        return qntMesa;
+    }
+}
