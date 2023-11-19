@@ -98,6 +98,9 @@ class Restaurante{
 }
 
 
+import java.util.Scanner; 
+import java.util.ArrayList;
+import java.util.List;
 class TesteRestaurante{
     public static void main(String[] args){
         int escolha, escolha2;
@@ -122,63 +125,74 @@ class TesteRestaurante{
                 System.out.println("Mesa reservada: " + quntMesa);
                 Cliente cliente = new Cliente();
                 System.out.println("Nome na comanda: ");
-                    sc.nextLine();
-                    String nomeCliente = sc.nextLine();
-                    
-                    System.out.println("email: ");
-                    String emailCliente = sc.nextLine();
-                    cliente.getCliente(nomeCliente, emailCliente, quntMesa);
-                    clientes.add(cliente);
-                    
-                
-                break;
+                sc.nextLine();
+                String nomeCliente = sc.nextLine(); 
+                System.out.println("email: ");
+                String emailCliente = sc.nextLine();
+                cliente.getCliente(nomeCliente, emailCliente, quntMesa);
+                clientes.add(cliente);
+            break;
             case 2: 
-                
-                
                 System.out.println("1-Agua - 2,0\n2-Coxinha - 5,0\n3-Refri - 6,0");
                 System.out.println("Informe o numero do pedido: ");
                 escolha2 = sc.nextInt();
                 System.out.println("Informe o numero da mesa: ");
                 int mesa_num = sc.nextInt();
-                Comanda comanda = new Comanda();
-                if(escolha2 == 1){
-                    
-                    comanda.getComanda("agua", 2, mesa_num);
-                }else if(escolha2 == 2){
-                    
-                    comanda.getComanda("coxinha", 5, mesa_num);
-                }else if(escolha2 == 3){
-                    
-                    comanda.getComanda("refri", 6, mesa_num);
+                Mesa mesaCorrespondente = null;
+                for (Mesa mesa1 : mesas) {
+                    if (mesa1.numeroMesa() == mesa_num) {
+                        mesaCorrespondente = mesa1;
+                        break;
+                    }
                 }
-                comandas.add(comanda);
+            
+                if (mesaCorrespondente != null) {
+                    Comanda comanda = new Comanda();
+                    if (escolha2 == 1) {
+                        comanda.getComanda("agua", 2, mesa_num);
+                    } else if (escolha2 == 2) {
+                        comanda.getComanda("coxinha", 5, mesa_num);
+                    } else if (escolha2 == 3) {
+                        comanda.getComanda("refri", 6, mesa_num);
+                    }
+                    mesaCorrespondente.adicionarPedido(comanda);
+                    comandas.add(comanda);
+                } else {
+                    System.out.println("Mesa não encontrada.");
+                }
+              
+                
                 
                  
                 break;
             case 3: 
-                System.out.println("Informe o numero da mesa para fecharmos a conta: ");
-                sc.nextLine();
-                int fechar_mesa = sc.nextInt();
-                 for (int f = 0; f < comandas.size(); f++) {
-                     Comanda comanda_aux = comandas.get(f);
-                    if (comanda_aux.getNumeroComanda() == fechar_mesa) {
-                    comanda_aux.mostrarComanda();
-                    System.out.println("Valor com 10%: " + comanda_aux.calculo10p());
-                    for(int g = 0; g < mesas.size(); g++){
-                        Mesa mesa_aux = mesas.get(g);
-                        if(mesa_aux.numeroMesa() == fechar_mesa){
-                            
-                            double val = comanda_aux.calculo10p();
-                            int nMesa = mesa_aux.quantCliente();
-                            double dividido = val/nMesa;
-                            System.out.println("valor dividido: " + dividido);
-                        }
-                    }
-                    
-                    break; 
-                    }
+            System.out.println("Informe o numero da mesa para fecharmos a conta: ");
+            int fechar_mesa = sc.nextInt();
+            Mesa mesaFecharConta = null;
+            for (Mesa mesaa : mesas) {
+                if (mesaa.numeroMesa() == fechar_mesa) {
+                    mesaFecharConta = mesaa;
+                    break;
                 }
+            }
+        
+            if (mesaFecharConta != null) {
+                double totalConta = 0;
                 
+                for (Comanda comanda : mesaFecharConta.pedidos) {
+                    totalConta += comanda.calculo10p();
+                }
+               
+                System.out.println("Total da conta com 10%: " + totalConta);
+                int nMesa = mesaFecharConta.quantCliente();
+                double dividido = totalConta/nMesa;
+                System.out.println("valor dividido: " + dividido);
+
+            } else {
+                System.out.println("Mesa não encontrada.");
+            }
+                    
+                    break;       
 
         }
         
